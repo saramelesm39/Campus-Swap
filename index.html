@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campus Swap – Der Marktplatz von Studierenden für Studierende</title>
+<meta name="description" content="Campus Swap: Gebrauchte Bücher, Kleidung, Möbel und Lernmaterialien direkt an deiner Hochschule kaufen und verkaufen – nur unter verifizierten Studierenden.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gruen: #1f8a5b;
+    --gruen-dunkel: #146642;
+    --gelb: #ffc94d;
+    --text: #1d2a24;
+    --grau: #5b6b63;
+    --hell: #f3f8f5;
+    --weiss: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: "Poppins", Arial, sans-serif; color: var(--text); background: var(--weiss); line-height: 1.6; }
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+  section { padding: 72px 0; }
+  h1, h2, h3 { line-height: 1.2; }
+  h2 { font-size: 2rem; margin-bottom: 12px; text-align: center; }
+  .untertitel { text-align: center; color: var(--grau); max-width: 640px; margin: 0 auto 40px; }
+
+  /* Navigation */
+  nav { position: sticky; top: 0; background: var(--weiss); box-shadow: 0 2px 10px rgba(0,0,0,.06); z-index: 10; }
+  nav .container { display: flex; justify-content: space-between; align-items: center; height: 64px; }
+  .logo { font-weight: 700; font-size: 1.3rem; color: var(--gruen); text-decoration: none; }
+  .logo span { color: var(--text); }
+  nav ul { display: flex; gap: 24px; list-style: none; }
+  nav ul a { color: var(--text); text-decoration: none; font-size: .95rem; }
+  nav ul a:hover { color: var(--gruen); }
+
+  /* Buttons */
+  .button { display: inline-block; padding: 14px 28px; border-radius: 30px; font-weight: 600; text-decoration: none; transition: transform .15s, background .15s; }
+  .button:hover { transform: translateY(-2px); }
+  .button-gelb { background: var(--gelb); color: var(--text); }
+  .button-weiss { background: transparent; color: var(--weiss); border: 2px solid var(--weiss); }
+  .button-gruen { background: var(--gruen); color: var(--weiss); }
+  .button-gruen:hover { background: var(--gruen-dunkel); }
+
+  /* Hero */
+  .hero { background: linear-gradient(135deg, var(--gruen), var(--gruen-dunkel)); color: var(--weiss); text-align: center; padding: 100px 0 90px; }
+  .hero h1 { font-size: 2.8rem; margin-bottom: 16px; }
+  .hero p { font-size: 1.15rem; max-width: 620px; margin: 0 auto 32px; opacity: .95; }
+  .hero .buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  /* Problem & Lösung */
+  .zwei-spalten { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .box { background: var(--hell); border-radius: 16px; padding: 32px; }
+  .box h3 { margin-bottom: 12px; font-size: 1.3rem; }
+  .box ul { padding-left: 20px; color: var(--grau); }
+  .box li { margin-bottom: 8px; }
+  .box.loesung { background: #e3f4ea; }
+
+  /* Vorteile */
+  .hell { background: var(--hell); }
+  .karten { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .karte { background: var(--weiss); border-radius: 16px; padding: 28px 22px; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,.05); }
+  .icon { font-size: 2.2rem; margin-bottom: 12px; }
+  .karte h3 { font-size: 1.05rem; margin-bottom: 8px; }
+  .karte p { color: var(--grau); font-size: .92rem; }
+
+  /* So funktioniert's */
+  .schritte { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; counter-reset: schritt; }
+  .schritt { text-align: center; padding: 10px; }
+  .schritt::before { counter-increment: schritt; content: counter(schritt); display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; background: var(--gruen); color: var(--weiss); font-weight: 700; font-size: 1.2rem; margin-bottom: 14px; }
+  .schritt h3 { margin-bottom: 6px; font-size: 1.1rem; }
+  .schritt p { color: var(--grau); }
+  .kategorien { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 36px; }
+  .kategorie { background: var(--hell); border-radius: 20px; padding: 8px 16px; font-size: .9rem; }
+
+  /* Video */
+  .video { max-width: 800px; margin: 0 auto; position: relative; padding-top: 56.25%; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,.12); }
+  .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+  /* Zielgruppen */
+  .drei-spalten { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+  /* Call-to-Action */
+  .cta { background: linear-gradient(135deg, var(--gruen), var(--gruen-dunkel)); color: var(--weiss); text-align: center; }
+  .cta h2 { color: var(--weiss); }
+  .cta p { max-width: 560px; margin: 0 auto 30px; opacity: .95; }
+
+  footer { background: var(--text); color: #c9d3ce; text-align: center; padding: 28px 0; font-size: .88rem; }
+
+  /* Smartphone */
+  @media (max-width: 800px) {
+    nav ul { display: none; }
+    .hero h1 { font-size: 2rem; }
+    .zwei-spalten, .drei-spalten, .schritte { grid-template-columns: 1fr; }
+    .karten { grid-template-columns: 1fr 1fr; }
+    section { padding: 56px 0; }
+  }
+  @media (max-width: 480px) {
+    .karten { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== Navigation ===== -->
+<nav>
+  <div class="container">
+    <a href="#" class="logo">Campus<span>Swap</span></a>
+    <ul>
+      <li><a href="#problem">Idee</a></li>
+      <li><a href="#vorteile">Vorteile</a></li>
+      <li><a href="#video">Video</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ===== Hero ===== -->
+<header class="hero">
+  <div class="container">
+    <h1>Kaufen, verkaufen, tauschen –<br>direkt auf deinem Campus.</h1>
+    <p>Campus Swap ist der Marktplatz von Studierenden für Studierende: Gebrauchte Bücher, Kleidung, Möbel und Lernmaterialien – nur unter verifizierten Kommilitonen, mit Übergabe auf dem Campus.</p>
+    <div class="buttons">
+      <!-- HIER EUREN CALENDLY-LINK EINTRAGEN -->
+      <a href="https://calendly.com/EUER-LINK" target="_blank" class="button button-gelb">Termin mit uns buchen</a>
+      <a href="#video" class="button button-weiss">Video ansehen</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===== Problem & Lösung ===== -->
+<section id="problem">
+  <div class="container">
+    <h2>Warum Campus Swap?</h2>
+    <p class="untertitel">Das Studium ist teuer genug. Trotzdem landen jedes Semester Bücher und Möbel im Müll, die andere dringend brauchen.</p>
+    <div class="zwei-spalten">
+      <div class="box">
+        <h3>😩 Das Problem</h3>
+        <ul>
+          <li>Neue Fachbücher kosten schnell 50–80 € – oft für nur ein Semester.</li>
+          <li>Möbel und Alltagsgegenstände belasten das knappe Budget.</li>
+          <li>Bestehende Plattformen sind anonym, unübersichtlich und Versand ist teuer und riskant.</li>
+          <li>Am Semesterende wird vieles weggeworfen statt weitergegeben.</li>
+        </ul>
+      </div>
+      <div class="box loesung">
+        <h3>💡 Die Lösung</h3>
+        <ul>
+          <li>Ein Marktplatz nur für Studierende deiner Hochschule.</li>
+          <li>Verifizierung über die Hochschul-E-Mail – du handelst nur mit echten Kommilitonen.</li>
+          <li>Übergabe persönlich auf dem Campus – zwischen zwei Vorlesungen.</li>
+          <li>Kostenlos und ohne Vermittlungsgebühr.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Vorteile ===== -->
+<section id="vorteile" class="hell">
+  <div class="container">
+    <h2>Deine Vorteile</h2>
+    <p class="untertitel">Vertrauen, Nähe und Nachhaltigkeit – darum ist Campus Swap anders.</p>
+    <div class="karten">
+      <div class="karte">
+        <div class="icon">🎓</div>
+        <h3>Nur Studierende</h3>
+        <p>Verifiziert über die Hochschul-E-Mail. Keine Fake-Profile, kein Betrug.</p>
+      </div>
+      <div class="karte">
+        <div class="icon">📍</div>
+        <h3>Übergabe auf dem Campus</h3>
+        <p>Kein Versand, keine Wartezeit – einfach in der Mensa oder Bibliothek treffen.</p>
+      </div>
+      <div class="karte">
+        <div class="icon">💸</div>
+        <h3>Keine Gebühren</h3>
+        <p>Inserieren und Verkaufen ist kostenlos. Was du verdienst, gehört dir.</p>
+      </div>
+      <div class="karte">
+        <div class="icon">♻️</div>
+        <h3>Nachhaltig</h3>
+        <p>Dinge bleiben im Umlauf, statt im Müll zu landen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== So funktioniert's ===== -->
+<section>
+  <div class="container">
+    <h2>So funktioniert's</h2>
+    <p class="untertitel">In drei Schritten zum Deal mit deinen Kommilitonen.</p>
+    <div class="schritte">
+      <div class="schritt">
+        <h3>Registrieren</h3>
+        <p>Mit deiner Hochschul-E-Mail anmelden und verifizieren.</p>
+      </div>
+      <div class="schritt">
+        <h3>Inserieren oder stöbern</h3>
+        <p>Anzeige in einer Minute erstellen oder Angebote an deiner Hochschule durchsuchen.</p>
+      </div>
+      <div class="schritt">
+        <h3>Auf dem Campus treffen</h3>
+        <p>Treffpunkt im Chat vereinbaren und den Artikel persönlich übergeben.</p>
+      </div>
+    </div>
+    <div class="kategorien">
+      <span class="kategorie">📚 Bücher &amp; Skripte</span>
+      <span class="kategorie">✏️ Lernmaterialien</span>
+      <span class="kategorie">👕 Kleidung</span>
+      <span class="kategorie">🛋️ Möbel</span>
+      <span class="kategorie">💻 Technik</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Video ===== -->
+<section id="video" class="hell">
+  <div class="container">
+    <h2>Campus Swap in 45 Sekunden</h2>
+    <p class="untertitel">Sieh dir unser Pitch-Video an und erfahre, wie Campus Swap dein Studium günstiger macht.</p>
+    <div class="video">
+      <!-- HIER EURE YOUTUBE-VIDEO-ID EINTRAGEN: den Teil nach "watch?v=" bzw. nach "youtu.be/" -->
+      <iframe src="https://www.youtube.com/embed/VIDEO-ID" title="Campus Swap Pitch-Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Für wen? ===== -->
+<section>
+  <div class="container">
+    <h2>Für wen ist Campus Swap?</h2>
+    <p class="untertitel">Wir starten als Pilotprojekt an der htw saar – und wollen danach an weitere Hochschulen.</p>
+    <div class="drei-spalten">
+      <div class="box">
+        <h3>🎒 Studierende</h3>
+        <p>Spare Geld bei Büchern und Möbeln und verkaufe, was du nicht mehr brauchst – besonders zu Semesterbeginn und -ende.</p>
+      </div>
+      <div class="box">
+        <h3>📈 Investoren</h3>
+        <p>Ein validiertes Konzept mit klarer Zielgruppe, niedrigen Kosten und skalierbarem Modell über Premium-Anzeigen und Kooperationen.</p>
+      </div>
+      <div class="box">
+        <h3>🤝 Kooperationspartner</h3>
+        <p>AStA, Studierendenwerk, Buchhandlungen und Copyshops erreichen über Campus Swap direkt ihre Zielgruppe.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Call-to-Action ===== -->
+<section id="kontakt" class="cta">
+  <div class="container">
+    <h2>Lust auf Campus Swap?</h2>
+    <p>Ob als zukünftige Nutzerin, Investor oder Kooperationspartner – buche ein kurzes Gespräch mit unserem Team. Wir freuen uns auf dein Feedback!</p>
+    <!-- HIER EUREN CALENDLY-LINK EINTRAGEN -->
+    <a href="https://calendly.com/EUER-LINK" target="_blank" class="button button-gelb">Jetzt Termin buchen</a>
+  </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer>
+  <div class="container">
+    <p>© 2026 Campus Swap · Ein studentisches Projekt von Sara und Beata im Modul Projektmanagement an der htw saar</p>
+  </div>
+</footer>
+
+</body>
+</html>
