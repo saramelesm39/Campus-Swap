@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campus Swap – Der Marktplatz von Studierenden für Studierende</title>
+<meta name="description" content="Gebrauchte Bücher, Kleidung, Möbel und Lernmaterialien direkt an deiner Hochschule kaufen und verkaufen – nur unter verifizierten Studierenden.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --tinte: #1c2b6b;      /* Kugelschreiber-Blau */
+    --tinte-hell: #4a5a9c;
+    --papier: #fbfaf5;
+    --linie: #dfe4f2;
+    --marker: #f6e54b;     /* Textmarker-Gelb */
+    --klebeband: #f3a9bd;
+    --minze: #c4ead6;
+    --himmel: #cfe0ff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Bricolage Grotesque", system-ui, sans-serif;
+    color: var(--tinte);
+    background: var(--papier);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+  img { max-width: 100%; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--tinte); outline-offset: 3px; border-radius: 4px; }
+
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+  .block { padding: 96px 0; }
+  h1, h2, h3 { font-weight: 800; line-height: 1.08; letter-spacing: -0.02em; }
+  h2 { font-size: clamp(2rem, 4vw, 2.75rem); max-width: 18ch; }
+  .intro { color: var(--tinte-hell); max-width: 56ch; margin-top: 14px; }
+
+  /* ---------- Navigation ---------- */
+  .nav { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; }
+  .logo { font-weight: 800; font-size: 1.35rem; text-decoration: none; letter-spacing: -0.02em; }
+  .logo-swap { display: inline-block; transform: rotate(-4deg); background: var(--marker); padding: 0 6px; margin-left: 2px; }
+  .nav ul { display: flex; gap: 28px; list-style: none; }
+  .nav ul a { text-decoration: none; font-weight: 600; }
+  .nav ul a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: inline-block; text-decoration: none; font-weight: 700; font-size: 1.05rem;
+    padding: 15px 26px; border-radius: 999px; border: 2px solid var(--tinte);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .btn-voll { background: var(--tinte); color: var(--papier); box-shadow: 4px 4px 0 var(--marker); }
+  .btn-voll:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--marker); }
+  .btn-leer { background: transparent; }
+  .btn-leer:hover { background: var(--himmel); }
+
+  /* ---------- Hero ---------- */
+  .hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 48px; align-items: center; padding: 48px 0 96px; }
+  .hero h1 { font-size: clamp(2.6rem, 6vw, 4.6rem); }
+  .hero p { font-size: 1.2rem; color: var(--tinte-hell); margin: 22px 0 34px; max-width: 46ch; }
+  .hero .aktionen { display: flex; gap: 14px; flex-wrap: wrap; }
+  .hinweis { margin-top: 22px; font-size: .95rem; color: var(--tinte-hell); }
+
+  /* Schwarzes Brett mit Zetteln */
+  .brett {
+    position: relative; min-height: 540px; border-radius: 22px;
+    background-color: var(--himmel);
+    background-image: radial-gradient(var(--tinte) 0.6px, transparent 0.6px);
+    background-size: 18px 18px;
+    background-position: 0 0;
+  }
+  .zettel {
+    position: absolute; width: 205px; padding: 22px 18px 18px;
+    background: #fff; box-shadow: 0 10px 22px rgba(28, 43, 107, .16);
+    font-family: "Caveat", cursive; font-size: 1.45rem; line-height: 1.15;
+    animation: landen .6s cubic-bezier(.2, .9, .3, 1.2) both;
+  }
+  .zettel::before { /* Klebeband */
+    content: ""; position: absolute; top: -11px; left: 50%; width: 76px; height: 22px;
+    transform: translateX(-50%) rotate(-3deg); background: var(--klebeband); opacity: .85;
+  }
+  .zettel .preis { display: inline-block; font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 1.5rem; margin-top: 8px; }
+  .zettel .alt { font-family: "Bricolage Grotesque", sans-serif; font-size: .9rem; text-decoration: line-through; color: var(--tinte-hell); margin-left: 6px; }
+  .zettel .ort { display: block; font-family: "Bricolage Grotesque", sans-serif; font-size: .85rem; color: var(--tinte-hell); margin-top: 6px; }
+  .z1 { top: 36px; left: 6%; transform: rotate(-5deg); animation-delay: .1s; }
+  .z2 { top: 60px; right: 6%; transform: rotate(4deg); background: var(--marker); animation-delay: .25s; }
+  .z3 { bottom: 40px; left: 9%; transform: rotate(3deg); background: var(--minze); animation-delay: .4s; }
+  .z4 { bottom: 64px; right: 5%; transform: rotate(-3deg); animation-delay: .55s; }
+  .z2::before { background: var(--minze); }
+  .z3::before { background: var(--marker); }
+  @keyframes landen {
+    from { opacity: 0; translate: 0 -28px; scale: 1.06; }
+    to   { opacity: 1; translate: 0 0; scale: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .zettel { animation: none; }
+    .btn { transition: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* ---------- Preisvergleich ---------- */
+  .problem { background: var(--tinte); color: var(--papier); }
+  .problem .intro { color: #c7cff0; }
+  .vergleich { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 52px; }
+  .seite { border-radius: 22px; padding: 36px; }
+  .seite-neu { border: 2px dashed #6e7cc0; }
+  .seite-swap { background: var(--papier); color: var(--tinte); }
+  .seite h3 { font-size: 1.35rem; margin-bottom: 18px; }
+  .zeile { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid currentColor; border-bottom-color: rgba(127, 140, 200, .35); }
+  .zeile:last-of-type { border-bottom: 0; }
+  .zeile span:last-child { font-weight: 800; white-space: nowrap; }
+  .summe { margin-top: 18px; padding-top: 16px; border-top: 3px solid currentColor; display: flex; justify-content: space-between; font-size: 1.3rem; font-weight: 800; }
+  .seite-swap .summe span:last-child { background: var(--marker); padding: 0 8px; }
+  .fussnote { margin-top: 18px; font-size: .9rem; color: #c7cff0; }
+
+  /* ---------- Vorteile ---------- */
+  .vorteile { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 56px; margin-top: 48px; }
+  .vorteil { display: grid; grid-template-columns: 56px 1fr; gap: 18px; padding: 28px 0; border-top: 2px solid var(--linie); }
+  .vorteil .symbol { width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center; font-size: 1.6rem; }
+  .vorteil:nth-child(1) .symbol { background: var(--himmel); }
+  .vorteil:nth-child(2) .symbol { background: var(--minze); }
+  .vorteil:nth-child(3) .symbol { background: var(--marker); }
+  .vorteil:nth-child(4) .symbol { background: var(--klebeband); }
+  .vorteil h3 { font-size: 1.25rem; margin-bottom: 6px; }
+  .vorteil p { color: var(--tinte-hell); }
+
+  /* ---------- Schritte ---------- */
+  .schritte-bereich { background: #fff; border-top: 2px solid var(--linie); border-bottom: 2px solid var(--linie); }
+  .schritte { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 48px; counter-reset: s; }
+  .schritte li { counter-increment: s; position: relative; padding-top: 74px; }
+  .schritte li::before {
+    content: counter(s); position: absolute; top: 0; left: 0;
+    font-size: 3.6rem; font-weight: 800; line-height: 1; color: var(--tinte);
+    -webkit-text-stroke: 0;
+  }
+  .schritte li::after { content: ""; position: absolute; top: 26px; left: 52px; right: -16px; height: 2px; background: repeating-linear-gradient(90deg, var(--tinte) 0 8px, transparent 8px 14px); }
+  .schritte li:last-child::after { display: none; }
+  .schritte h3 { font-size: 1.25rem; margin-bottom: 6px; }
+  .schritte p { color: var(--tinte-hell); }
+  .kategorien { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 48px; }
+  .kategorien span { border: 2px solid var(--tinte); border-radius: 999px; padding: 6px 16px; font-weight: 600; font-size: .95rem; }
+
+  /* ---------- Video ---------- */
+  .video-raster { display: grid; grid-template-columns: 1fr 1.5fr; gap: 48px; align-items: center; }
+  .video-rahmen { position: relative; aspect-ratio: 16 / 9; border-radius: 22px; overflow: hidden; border: 3px solid var(--tinte); box-shadow: 10px 10px 0 var(--marker); background: var(--himmel); }
+  .video-rahmen iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+  /* ---------- Zielgruppen ---------- */
+  .gruppen { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 48px; }
+  .gruppe { border-left: 4px solid var(--tinte); padding-left: 20px; }
+  .gruppe h3 { font-size: 1.3rem; margin-bottom: 8px; }
+  .gruppe p { color: var(--tinte-hell); }
+
+  /* ---------- Abschluss ---------- */
+  .abschluss { padding: 0 0 96px; }
+  .abschluss-karte {
+    background: var(--marker); border-radius: 28px; padding: 64px 48px;
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: center;
+  }
+  .abschluss-karte h2 { max-width: 16ch; }
+  .abschluss-karte p { margin-top: 14px; max-width: 46ch; }
+  .abschluss-karte .rechts { text-align: right; }
+
+  footer { border-top: 2px solid var(--linie); padding: 28px 0; font-size: .92rem; color: var(--tinte-hell); }
+
+  /* ---------- Smartphone ---------- */
+  @media (max-width: 880px) {
+    .nav ul { display: none; }
+    .hero, .vergleich, .video-raster, .abschluss-karte { grid-template-columns: 1fr; }
+    .hero { padding-top: 24px; }
+    .brett { min-height: 540px; }
+    .vorteile { grid-template-columns: 1fr; }
+    .schritte, .gruppen { grid-template-columns: 1fr; }
+    .schritte li::after { display: none; }
+    .abschluss-karte { padding: 44px 26px; }
+    .abschluss-karte .rechts { text-align: left; }
+    .block { padding: 72px 0; }
+  }
+  @media (max-width: 480px) {
+    .zettel { width: 168px; font-size: 1.25rem; padding: 18px 14px 14px; }
+    .brett { min-height: 600px; }
+    .z1 { left: 10px; top: 28px; } .z2 { right: 10px; top: 150px; } .z3 { left: 14px; bottom: 150px; } .z4 { right: 12px; bottom: 24px; }
+    .seite { padding: 26px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="nav" aria-label="Hauptnavigation">
+    <a href="#" class="logo">Campus<span class="logo-swap">Swap</span></a>
+    <ul>
+      <li><a href="#sparen">Sparen</a></li>
+      <li><a href="#so-gehts">So geht's</a></li>
+      <li><a href="#video">Video</a></li>
+      <li><a href="#termin">Termin</a></li>
+    </ul>
+  </nav>
+
+  <!-- ===== Hero ===== -->
+  <header class="hero">
+    <div>
+      <h1>Das schwarze Brett deiner Hochschule. Nur digital.</h1>
+      <p>Kauf und verkauf gebrauchte Bücher, Kleidung, Möbel und Lernmaterialien direkt an deiner Hochschule. Nur mit verifizierten Studierenden, Übergabe auf dem Campus.</p>
+      <div class="aktionen">
+        <!-- HIER EUREN CALENDLY-LINK EINTRAGEN -->
+        <a href="https://calendly.com/EUER-LINK" target="_blank" rel="noopener" class="btn btn-voll">Gespräch mit uns buchen</a>
+        <a href="#video" class="btn btn-leer">Video ansehen</a>
+      </div>
+      <p class="hinweis">Pilotprojekt an der htw saar · kostenlos, ohne Vermittlungsgebühr</p>
+    </div>
+
+    <div class="brett" aria-label="Beispielanzeigen auf Campus Swap">
+      <div class="zettel z1">Statistik-Buch, kaum markiert
+        <span class="preis">15 €</span><span class="alt">64,90 €</span>
+        <span class="ort">Übergabe: Mensa, Di 12 Uhr</span>
+      </div>
+      <div class="zettel z2">IKEA-Schreibtisch, muss bis Monatsende raus!
+        <span class="preis">25 €</span>
+        <span class="ort">Abholung: Wohnheim Waldhausweg</span>
+      </div>
+      <div class="zettel z3">Taschenrechner TI-30 + Formelsammlung
+        <span class="preis">10 €</span><span class="alt">29 €</span>
+        <span class="ort">Übergabe: Bibliothek</span>
+      </div>
+      <div class="zettel z4">Winterjacke Gr. M, zu verschenken
+        <span class="preis">0 €</span>
+        <span class="ort">Übergabe: Campus Rotenbühl</span>
+      </div>
+    </div>
+  </header>
+</div>
+
+<!-- ===== Preisvergleich ===== -->
+<section id="sparen" class="block problem">
+  <div class="wrap">
+    <h2>Ein Semesterstart kostet schnell 200 €. Muss nicht sein.</h2>
+    <p class="intro">Fachbücher, Taschenrechner, ein Schreibtisch fürs WG-Zimmer: Vieles davon braucht man nur ein paar Monate. Und am Semesterende landet es im Keller oder im Müll.</p>
+
+    <div class="vergleich">
+      <div class="seite seite-neu">
+        <h3>Alles neu kaufen</h3>
+        <div class="zeile"><span>Fachbuch Statistik</span><span>64,90 €</span></div>
+        <div class="zeile"><span>Taschenrechner</span><span>29,00 €</span></div>
+        <div class="zeile"><span>Schreibtisch</span><span>79,00 €</span></div>
+        <div class="zeile"><span>Versand für Online-Käufe</span><span>9,90 €</span></div>
+        <div class="summe"><span>Gesamt</span><span>182,80 €</span></div>
+      </div>
+      <div class="seite seite-swap">
+        <h3>Mit Campus Swap</h3>
+        <div class="zeile"><span>Fachbuch Statistik</span><span>15,00 €</span></div>
+        <div class="zeile"><span>Taschenrechner</span><span>10,00 €</span></div>
+        <div class="zeile"><span>Schreibtisch</span><span>25,00 €</span></div>
+        <div class="zeile"><span>Versand</span><span>0,00 €</span></div>
+        <div class="summe"><span>Gesamt</span><span>50,00 €</span></div>
+      </div>
+    </div>
+    <p class="fussnote">Beispielrechnung mit typischen Neu- und Gebrauchtpreisen.</p>
+  </div>
+</section>
+
+<!-- ===== Vorteile ===== -->
+<section class="block">
+  <div class="wrap">
+    <h2>Warum nicht einfach Kleinanzeigen?</h2>
+    <p class="intro">Weil du bei Campus Swap weißt, mit wem du handelst, und dich nicht quer durch die Stadt verabreden musst.</p>
+    <div class="vorteile">
+      <div class="vorteil">
+        <div class="symbol" aria-hidden="true">🎓</div>
+        <div><h3>Nur echte Studierende</h3><p>Anmeldung nur mit Hochschul-E-Mail. Keine Fake-Profile, keine Betrugsmaschen.</p></div>
+      </div>
+      <div class="vorteil">
+        <div class="symbol" aria-hidden="true">📍</div>
+        <div><h3>Übergabe zwischen zwei Vorlesungen</h3><p>Ihr trefft euch in der Mensa oder Bibliothek. Kein Paket, kein Versand, kein Warten.</p></div>
+      </div>
+      <div class="vorteil">
+        <div class="symbol" aria-hidden="true">💸</div>
+        <div><h3>Keine Gebühren</h3><p>Inserieren und verkaufen ist kostenlos. Wer mehr Sichtbarkeit will, kann seine Anzeige für 1–2 € hervorheben.</p></div>
+      </div>
+      <div class="vorteil">
+        <div class="symbol" aria-hidden="true">♻️</div>
+        <div><h3>Bleibt im Umlauf</h3><p>Dein altes Buch hilft dem nächsten Erstsemester, statt im Keller zu verstauben.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== So geht's ===== -->
+<section id="so-gehts" class="block schritte-bereich">
+  <div class="wrap">
+    <h2>In drei Schritten zum Deal</h2>
+    <ol class="schritte">
+      <li><h3>Mit Hochschul-E-Mail anmelden</h3><p>Ein Bestätigungslink, fertig. So bleibt Campus Swap unter Studierenden.</p></li>
+      <li><h3>Inserieren oder stöbern</h3><p>Foto machen, Preis eintragen, online. Oder Angebote an deiner Hochschule durchsuchen.</p></li>
+      <li><h3>Auf dem Campus treffen</h3><p>Treffpunkt im Chat ausmachen, Artikel ansehen, bezahlen, mitnehmen.</p></li>
+    </ol>
+    <div class="kategorien" aria-label="Kategorien">
+      <span>📚 Bücher &amp; Skripte</span>
+      <span>✏️ Lernmaterialien</span>
+      <span>👕 Kleidung</span>
+      <span>🛋️ Möbel</span>
+      <span>💻 Technik</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Video ===== -->
+<section id="video" class="block">
+  <div class="wrap video-raster">
+    <div>
+      <h2>Campus Swap in 45 Sekunden</h2>
+      <p class="intro">Wie Campus Swap funktioniert und warum es dein Studium günstiger macht.</p>
+    </div>
+    <div class="video-rahmen">
+      <!-- HIER EURE YOUTUBE-VIDEO-ID EINTRAGEN: den Teil nach "watch?v=" -->
+      <iframe src="https://www.youtube.com/embed/VIDEO-ID" title="Campus Swap Pitch-Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Zielgruppen ===== -->
+<section class="block" style="padding-top:0">
+  <div class="wrap">
+    <h2>Für wen wir Campus Swap bauen</h2>
+    <div class="gruppen">
+      <div class="gruppe">
+        <h3>Studierende</h3>
+        <p>Spar Geld bei Büchern und Möbeln und verkauf, was du nicht mehr brauchst, vor allem zu Semesterbeginn und -ende.</p>
+      </div>
+      <div class="gruppe">
+        <h3>Investoren</h3>
+        <p>Eine klar abgegrenzte Zielgruppe, niedrige Kosten und ein Modell, das sich Hochschule für Hochschule ausrollen lässt.</p>
+      </div>
+      <div class="gruppe">
+        <h3>Kooperationspartner</h3>
+        <p>AStA, Studierendenwerk, Buchhandlungen und Copyshops erreichen über Campus Swap direkt Studierende vor Ort.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Termin ===== -->
+<section id="termin" class="abschluss">
+  <div class="wrap">
+    <div class="abschluss-karte">
+      <div>
+        <h2>Erzähl uns, was du davon hältst.</h2>
+        <p>Ob als Studentin, Investor oder Kooperationspartner: Buch dir 15 Minuten mit unserem Team. Wir freuen uns über jedes Feedback.</p>
+      </div>
+      <div class="rechts">
+        <!-- HIER EUREN CALENDLY-LINK EINTRAGEN -->
+        <a href="https://calendly.com/EUER-LINK" target="_blank" rel="noopener" class="btn btn-voll">Gespräch mit uns buchen</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">© 2026 Campus Swap. Ein studentisches Projekt von Sara und Beata im Modul Projektmanagement an der htw saar.</div>
+</footer>
+
+</body>
+</html>
